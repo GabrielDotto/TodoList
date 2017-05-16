@@ -18,12 +18,12 @@ import { TarefaService } from '../services/tarefa.service';
                   </div>  
                   <div class="body-pagina">
                     <ul>
-                      <li *ngFor="let tarefa of tarefas"  > 
+                      <li *ngFor="let tarefa of tarefas" on-mouseenter="showBtns(tarefa)" on-mouseleave="hideBtns(tarefa)"> 
                         <div class="tarefas">
                           <h3>
                                {{tarefa.titulo}}
                           </h3>
-                          <div class="edit-botoes">
+                          <div class="edit-botoes" *ngIf="tarefa.isFocus">
                             <span id="btn" >  
                               <i class="material-icons" (click)="delete(tarefa)"> delete </i> 
                               <i class="material-icons" [routerLink]="['/tarefa', tarefa.id]"> create </i> 
@@ -52,13 +52,13 @@ export class MainPageComponent  {
           .then(tarefas => this.tarefas = tarefas) ;
     }
 
-    // showOpcoes(tarefa : Tarefa): void {
-    //   tarefa.isFocus = !tarefa.isFocus; 
-    // }
+    showBtns(tarefa : Tarefa): void {
+      tarefa.isFocus = !tarefa.isFocus; 
+    }
 
-    // hideOpcoes(tarefa : Tarefa) : void {
-    //   tarefa.isFocus = !tarefa.isFocus; 
-    // }
+    hideBtns(tarefa : Tarefa) : void {
+      tarefa.isFocus = !tarefa.isFocus; 
+    }
 
     delete(tarefa : Tarefa): void   {
       this.tarefaService

@@ -18,12 +18,17 @@ import { TarefaService } from '../services/tarefa.service';
                   </div>  
                   <div class="body-pagina">
                     <ul>
-                      <li *ngFor="let tarefa of tarefas" on-mouseover="abrirOpcoes()" > 
+                      <li *ngFor="let tarefa of tarefas"  > 
                         <div class="tarefas">
-                          <h3 [routerLink]="['/tarefa', tarefa.id]" > {{tarefa.titulo}}  </h3>
-                          <div class="show-botoes">
-                            <span id="btn">   <i class="material-icons" (click)="delete(tarefa)"> delete </i> </span>
-                            <span id="btn">  <i class="material-icons" [routerLink]="['/tarefa', tarefa.id]"> create </i> </span>
+                          <h3>
+                               {{tarefa.titulo}}
+                          </h3>
+                          <div class="edit-botoes">
+                            <span id="btn" >  
+                              <i class="material-icons" (click)="delete(tarefa)"> delete </i> 
+                              <i class="material-icons" [routerLink]="['/tarefa', tarefa.id]"> create </i> 
+                              <i class="material-icons" id="done" >check_circle</i> 
+                             </span>
                           </div>
                         </div>  
                       </li>
@@ -38,7 +43,8 @@ export class MainPageComponent  {
 
   tarefas: Tarefa[] = [];
 
-
+    
+  
     constructor(private tarefaService: TarefaService) { }
 
     ngOnInit(): void {
@@ -46,9 +52,13 @@ export class MainPageComponent  {
           .then(tarefas => this.tarefas = tarefas) ;
     }
 
-    abrirOpcoes():void{
+    // showOpcoes(tarefa : Tarefa): void {
+    //   tarefa.isFocus = !tarefa.isFocus; 
+    // }
 
-    }
+    // hideOpcoes(tarefa : Tarefa) : void {
+    //   tarefa.isFocus = !tarefa.isFocus; 
+    // }
 
     delete(tarefa : Tarefa): void   {
       this.tarefaService

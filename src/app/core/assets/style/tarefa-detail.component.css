@@ -1,0 +1,11 @@
+.tarefaDetail{
+    position: absolute; 
+    margin: -100px 0 0 -200px;
+    top: 50%;
+    left: 50%;
+    background-color: #F0F0F0	;
+    border-radius: 15px;
+    padding: 25px;
+    border-color:black;
+}
+

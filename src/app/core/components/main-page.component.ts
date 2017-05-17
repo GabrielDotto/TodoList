@@ -20,14 +20,14 @@ import { TarefaService } from '../services/tarefa.service';
                     <ul>
                       <li *ngFor="let tarefa of tarefas" on-mouseenter="showBtns(tarefa)" on-mouseleave="hideBtns(tarefa)"> 
                         <div class="tarefas">
-                          <h3>
+                        <i class="material-icons" id="done" *ngIf="tarefa.dataConclusao != null">done</i> 
+                          <h3 [routerLink]="['/tarefa', tarefa.id]">
                                {{tarefa.titulo}}
                           </h3>
                           <div class="edit-botoes" *ngIf="tarefa.isFocus">
                             <span id="btn" >  
                               <i class="material-icons" (click)="delete(tarefa)"> delete </i> 
                               <i class="material-icons" [routerLink]="['/tarefa', tarefa.id]"> create </i> 
-                              <i class="material-icons" id="done" >check_circle</i> 
                              </span>
                           </div>
                         </div>  

@@ -15,8 +15,10 @@ import { Tarefa } from '../models/tarefa';
             <h2>Tarefa</h2>
             <div>
                 <label>Título: </label>
-                <input [(ngModel)]="tarefa.titulo" placeholder="titulo" />
-            </div>
+                <input [(ngModel)]="tarefa.titulo" placeholder="titulo" /> <br>
+                <label>Concluída </label>
+                <input #concluida type="checkbox" [checked]="tarefa.dataConclusao" (change)="alterarConclusaoTarefa(concluida, tarefa)" /> 
+            </div> 
             <button (click)="goBack()">Back</button>
             <button (click)="save()">Save</button>
         </div>
@@ -59,7 +61,21 @@ export class TarefaDetailComponent  {
             this.tarefaService.create(this.tarefa.titulo)
             .then( () => this.goBack());
         }
-       
     }
+
+    
+        alterarConclusaoTarefa(element: HTMLInputElement, tarefa: Tarefa): void{
+            `Checkbox ${element.value} was ${element.checked ? '' : 'un'}checked\n`
+            if(element.checked){
+                var dataAtual = new Date();
+                dataAtual.getDate
+                tarefa.dataConclusao = dataAtual;
+            }
+            else{
+                tarefa.dataConclusao = null;
+            }
+            var consolePrint = `Tarefa ${element.checked ? '' : 'ainda não '}concluída\n`
+            console.log(consolePrint);   
+        }
 
 }

@@ -10,7 +10,8 @@ import { TarefaService } from '../services/tarefa.service';
                   <div class="header-pagina">
                       <h1> Tarefas </h1>
                       <nav>
-                        <div>
+                        <div class="navbar">
+                          <i class="material-icons" [routerLink]="['/mainPage']" > home </i> 
                           <a id="btn-titulo" routerLink="/tarefa" routerLinkActive="active"> Adicionar Tarefa </a>
                         </div>
                       </nav>
@@ -49,7 +50,7 @@ export class MainPageComponent  {
 
     ngOnInit(): void {
         this.tarefaService.getTarefas()
-          .then(tarefas => this.tarefas = tarefas) ;
+          .subscribe(tarefas => this.tarefas = tarefas  ) ;
     }
 
     showBtns(tarefa : Tarefa): void {
@@ -63,7 +64,7 @@ export class MainPageComponent  {
     delete(tarefa : Tarefa): void   {
       this.tarefaService
       .delete(tarefa.id)
-      .then(() => {
+      .subscribe(() => {
         this.tarefas = this.tarefas.filter(h => h !== tarefa);
       })
     }

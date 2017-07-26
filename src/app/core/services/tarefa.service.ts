@@ -2,6 +2,10 @@ import { Injectable } from  '@angular/core';
 import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/catch';
+
+import { Observable } from 'rxjs/Observable';
 
 import { Tarefa } from '../models/tarefa';
 
@@ -11,48 +15,46 @@ import { Tarefa } from '../models/tarefa';
 export class TarefaService {
     
     private headers = new Headers({'Content-Type': 'application/json'});    
-    private tarefaUrl = 'api/tarefas';
-
+    private _tarefaUrl = 'http://localhost:3295/api/todo';
 
     constructor(private http : Http) {}
 
-    getTarefas(): Promise<Tarefa[]>{
-        return this.http.get(this.tarefaUrl)
-            .toPromise()
-            .then(response => response.json().data as Tarefa[])
-            .catch(this.handleError);
+    getTarefas() {
+        return this.http.get(this._tarefaUrl)
+            .map(response => <Tarefa[]>response.json())
+            .catch(error => {
+                console.log(error);
+                return Observable.throw(error);
+            });
     }
+    
 
-    getTarefa(id: number): Promise<Tarefa> {
-        const url = `${this.tarefaUrl}/${id}`;
+    getTarefa(id: number) {
+        const url = `${this._tarefaUrl}/${id}`;
         return this.http.get(url)
-            .toPromise()
-            .then(response => response.json().data as Tarefa)
+            .map(response => <Tarefa>response.json())
             .catch(this.handleError);
     }
 
-    update(tarefa : Tarefa): Promise<Tarefa>{
-        const url = `${this.tarefaUrl}/${tarefa.id}`;
+    update(tarefa : Tarefa) {
+        const url = `${this._tarefaUrl}/${tarefa.id}`;
         return this.http
-                .put(url, JSON.stringify(tarefa), {headers: this.headers})
-                .toPromise()
-                .then(() => tarefa)
+                .put(url, JSON.stringify(tarefa), {headers: this.headers})    
+                .map(() => tarefa)
                 .catch(this.handleError);
     }
 
-    create(titulo : string): Promise<Tarefa>{
+    create(tarefa : Tarefa) {
         return this.http
-            .post(this.tarefaUrl, JSON.stringify({titulo: titulo}), {headers: this.headers})
-            .toPromise()
-            .then(response => response.json().data as Tarefa)
+            .post(this._tarefaUrl, tarefa, {headers: this.headers})
+            .map(response => <Tarefa>response.json())
             .catch(this.handleError);
     }
 
-    delete(id : number): Promise<void> {
-        const url = `${this.tarefaUrl}/${id}`;
+    delete(id : number) {
+        const url = `${this._tarefaUrl}/${id}`;
         return this.http.delete(url, {headers: this.headers})
-            .toPromise()
-            .then(() => null)
+            .map(() => null)
             .catch(this.handleError);
     }
 

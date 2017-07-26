@@ -9,3 +9,36 @@
     border-color:black;
 }
 
+
+h1 {
+    text-align: center;
+    font-size: 36px;   
+}
+
+#container {
+    padding: 10px 0px 10px 0px;
+}
+
+#container:nth-child(1) > input {
+
+
+    border-color: white;
+    border-image: none;
+    background-color: none;
+}
+
+#container:nth-child(3) {
+    text-align: center;
+}
+ 
+
+#btn {
+    border-radius: 10px;
+    background-color: #48739f;
+    border:0px;
+    padding: 5px 10px 5px 10px;
+    color:white;
+    cursor: pointer;
+    margin: 0px 7px;
+}
+

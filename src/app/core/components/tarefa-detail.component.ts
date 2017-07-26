@@ -12,15 +12,21 @@ import { Tarefa } from '../models/tarefa';
     selector: 'tarefa',
     template: `
         <div class="tarefaDetail">
-            <h2>Tarefa</h2>
+            <h1>Tarefa</h1>
             <div>
-                <label>Título: </label>
-                <input [(ngModel)]="tarefa.titulo" placeholder="titulo" /> <br>
-                <label>Concluída </label>
-                <input #concluida type="checkbox" [checked]="tarefa.dataConclusao" (change)="alterarConclusaoTarefa(concluida, tarefa)" /> 
+                <div id="container">
+                    <label>Título: </label>
+                    <input [(ngModel)]="tarefa.titulo" placeholder="Título" /> <br>
+                </div>
+                <div id="container">
+                    <label>Concluída </label>
+                    <input #concluida type="checkbox" [checked]="tarefa.dataConclusao" (change)="alterarConclusaoTarefa(concluida, tarefa)" /> 
+                </div>
             </div> 
-            <button (click)="goBack()">Back</button>
-            <button (click)="save()">Save</button>
+            <div id="container">
+                <button id="btn" (click)="goBack()">Back</button>
+                <button id="btn" (click)="save()">Save</button>
+            </div>
         </div>
     `,
     styleUrls: ['../assets/style/tarefa-detail.component.css']
@@ -55,11 +61,11 @@ export class TarefaDetailComponent  {
     save(): void {
         if(this.tarefa.id != null){
              this.tarefaService.update(this.tarefa)
-            .then( () => this.goBack());
+            .subscribe( () => this.goBack());
         }
         else {
-            this.tarefaService.create(this.tarefa.titulo)
-            .then( () => this.goBack());
+            this.tarefaService.create(this.tarefa)
+            .subscribe( () => this.goBack());
         }
     }
 
@@ -69,10 +75,10 @@ export class TarefaDetailComponent  {
             if(element.checked){
                 var dataAtual = new Date();
                 dataAtual.getDate
-                tarefa.dataConclusao = dataAtual;
+                this.tarefa.dataConclusao = dataAtual;
             }
             else{
-                tarefa.dataConclusao = null;
+                this.tarefa.dataConclusao = null;
             }
             var consolePrint = `Tarefa ${element.checked ? '' : 'ainda não '}concluída\n`
             console.log(consolePrint);   
